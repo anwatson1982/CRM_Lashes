@@ -1,8 +1,19 @@
-﻿using System;
-
-public class Cusomers
+using System;
+namespace CRM_Lashes
 {
-	public Customers	()
-	{
-	}
+    public class Customer
+    {
+        public Customer()
+        {
+            int CustomerID;
+            string FirstName;
+            String LastName;
+            string PhoneNumber;
+            string EmailAddress;
+            DateTime date;
+            string LashType;
+            string LashSize;
+            string TreatmentType;
+        }
+    }
 }
