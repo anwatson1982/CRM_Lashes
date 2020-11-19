@@ -1,5 +1,5 @@
-using System;
-namespace CRM_Lashes
+﻿using System;
+namespace Lashes_CRM
 {
     public class Customer
     {
@@ -14,6 +14,8 @@ namespace CRM_Lashes
             string LashType;
             string LashSize;
             string TreatmentType;
+            bool ActiveUser;
+            bool SubscriberList;
         }
     }
 }
