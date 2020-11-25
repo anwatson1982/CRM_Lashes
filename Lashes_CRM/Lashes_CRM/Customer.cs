@@ -18,7 +18,12 @@ namespace Lashes_CRM
 
         public Customer()
         {
+            date = DateTime.Now;
+        }
 
+        public override string ToString()
+        {
+            return $"{CustomerID} - {FirstName} - {LastName}";
         }
     }
 }
