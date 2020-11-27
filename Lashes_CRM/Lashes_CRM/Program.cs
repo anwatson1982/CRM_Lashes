@@ -37,6 +37,7 @@ namespace Lashes_CRM
             //customers.OrderBy( b => b.date)
             
             bool UserActive = false;
+            var fileLocation = @"C:\Database.xml";
             string FirstNameInput = "";
             string SurNameInput = "";
             string Email = "";
@@ -58,25 +59,29 @@ namespace Lashes_CRM
             TreatmentType.Add("21");
             TreatmentType.Add("22");
 
-            if (File.Exists(@"C:\Database.xml"))
+            
+
+            if (File.Exists(fileLocation))
             {
                 Console.WriteLine($"File Exist");
            
-                StreamReader xmlDatabase = new StreamReader(@"C:\Database.xml");
+                StreamReader xmlDatabase = new StreamReader(fileLocation);
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
                 List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                Console.WriteLine(CustomerList.Count);
+                customers = CustomerList;
                 xmlDatabase.Close();
                 
             }
             else
             {
                 Console.WriteLine($"File does not exist");
-                var DbFile = new System.IO.StreamWriter(@"C:\Database.xml");
+                var DbFile = new System.IO.StreamWriter(fileLocation);
                 DbFile.Close();
                 
             }
 
-
+            
 
             Console.WriteLine($"Enter first name");
             FirstNameInput = Console.ReadLine();
@@ -103,7 +108,7 @@ namespace Lashes_CRM
 
             //Write Customer date to xml document
             XmlSerializer xs = new XmlSerializer(typeof(List<Customer>)) ;
-            TextWriter txtWriter = new StreamWriter(@"C:\Database.xml");
+            TextWriter txtWriter = new StreamWriter(fileLocation);
             xs.Serialize(txtWriter, customers);
             txtWriter.Close();          
         }

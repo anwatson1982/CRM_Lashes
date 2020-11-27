@@ -6,7 +6,7 @@ namespace Lashes_CRM
 {
     class Configuration
     {
-       
+    
 
     }
 }
