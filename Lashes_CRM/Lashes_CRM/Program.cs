@@ -8,6 +8,8 @@ namespace Lashes_CRM
 {
     class Program
     {
+        public static object ExceptionLogger { get; private set; }
+
         //public static object XmlSerializer { get; private set; }
         //public static object Database { get; private set; }
 
@@ -59,14 +61,19 @@ namespace Lashes_CRM
             if (File.Exists(@"C:\Database.xml"))
             {
                 Console.WriteLine($"File Exist");
-                XmlSerializer Dbfile = new XmlSerializer(typeof(List<Customer>));
-                Dbfile.Serialize(Console.Out, customers);
+           
+                StreamReader xmlDatabase = new StreamReader(@"C:\Database.xml");
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
+                List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                xmlDatabase.Close();
+                
             }
             else
             {
                 Console.WriteLine($"File does not exist");
                 var DbFile = new System.IO.StreamWriter(@"C:\Database.xml");
                 DbFile.Close();
+                
             }
 
 
@@ -87,18 +94,14 @@ namespace Lashes_CRM
 
             Customer customer1 = new Customer() { FirstName = FirstNameInput, LastName = SurNameInput, ActiveUser = UserActive, PhoneNumber = PhoneNo, EmailAddress = Email };
             Console.WriteLine(customer1);
-            Console.WriteLine(customer1.FirstName);
-            Console.WriteLine(customer1.LastName);
-
+          
+            
             customers.Add(customer1);
             customers.Add(new Customer() { FirstName = "John" });
-           /// customer1 = new Customer(); 
+            
            
 
-            //Write Customer date to xml document 
-
-
-
+            //Write Customer date to xml document
             XmlSerializer xs = new XmlSerializer(typeof(List<Customer>)) ;
             TextWriter txtWriter = new StreamWriter(@"C:\Database.xml");
             xs.Serialize(txtWriter, customers);
