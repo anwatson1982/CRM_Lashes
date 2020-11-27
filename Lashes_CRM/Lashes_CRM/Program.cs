@@ -42,14 +42,14 @@ namespace Lashes_CRM
             string SurNameInput = "";
             string Email = "";
             string PhoneNo = "";
+
+            //Lists going to be added to XML files then added to configuration class
             List<string> LashType = new List<string>();
             LashType.Add("Russian");
             LashType.Add("Classic");
-
             List<string> TreatmentType = new List<string>();
             TreatmentType.Add("Full Set");
             TreatmentType.Add("Infills");
-
             List<string> LashSize = new List<string>();
             TreatmentType.Add("16");
             TreatmentType.Add("17");
@@ -59,58 +59,62 @@ namespace Lashes_CRM
             TreatmentType.Add("21");
             TreatmentType.Add("22");
 
-            
+            Console.WriteLine($"Press 1 to add a customer");
+            Console.WriteLine($"Press 2 to search for a Customer");
+            Console.WriteLine($"Press 3 to edit a Customer details");
+            string userInput = Console.ReadLine();
+            int inputMain = Int32.Parse(userInput);
 
-            if (File.Exists(fileLocation))
+
+            if (inputMain == 1)
             {
-                Console.WriteLine($"File Exist");
-           
-                StreamReader xmlDatabase = new StreamReader(fileLocation);
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
-                List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
-                Console.WriteLine(CustomerList.Count);
-                customers = CustomerList;
-                xmlDatabase.Close();
-                
+                //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
+                if (File.Exists(fileLocation))
+                {
+                    Console.WriteLine($"File Exist");
+                    StreamReader xmlDatabase = new StreamReader(fileLocation);
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
+                    List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                    Console.WriteLine(CustomerList.Count);
+                    customers = CustomerList;
+                    xmlDatabase.Close();
+                }
+                else
+                {
+                    Console.WriteLine($"File does not exist");
+                    var DbFile = new System.IO.StreamWriter(fileLocation);
+                    DbFile.Close();
+                }
+                Console.WriteLine($"Enter first name");
+                FirstNameInput = Console.ReadLine();
+                Console.WriteLine($"Enter surname name");
+                SurNameInput = Console.ReadLine();
+                Console.WriteLine($"Enter email address");
+                Email = Console.ReadLine();
+                Console.WriteLine($"Enter Phone Number");
+                PhoneNo = Console.ReadLine();
+                //Setting class peratmeters 
+                Customer customer1 = new Customer() { FirstName = FirstNameInput, LastName = SurNameInput, ActiveUser = UserActive, PhoneNumber = PhoneNo, EmailAddress = Email };
+                Console.WriteLine(customer1);
+                //Adding new Customer to Database         
+                customers.Add(customer1);
+                customers.Add(new Customer() { FirstName = "John" });
+                //Write Customer data to xml document
+                XmlSerializer xs = new XmlSerializer(typeof(List<Customer>));
+                TextWriter txtWriter = new StreamWriter(fileLocation);
+                xs.Serialize(txtWriter, customers);
+                txtWriter.Close();
             }
-            else
+            if (inputMain == 2)
             {
-                Console.WriteLine($"File does not exist");
-                var DbFile = new System.IO.StreamWriter(fileLocation);
-                DbFile.Close();
-                
+                Console.WriteLine($"Press 1 to search First Name");
+                Console.WriteLine($"Press 2 to search Surname Name");
+                Console.WriteLine($"Press 3 to search email address");
             }
-
-            
-
-            Console.WriteLine($"Enter first name");
-            FirstNameInput = Console.ReadLine();
-
-            Console.WriteLine($"Enter surname name");
-            SurNameInput = Console.ReadLine();
-
-            Console.WriteLine($"Enter email address");
-            Email = Console.ReadLine();
-
-            Console.WriteLine($"Enter Phone Number");
-            PhoneNo = Console.ReadLine();
-
-    
-
-            Customer customer1 = new Customer() { FirstName = FirstNameInput, LastName = SurNameInput, ActiveUser = UserActive, PhoneNumber = PhoneNo, EmailAddress = Email };
-            Console.WriteLine(customer1);
-          
-            
-            customers.Add(customer1);
-            customers.Add(new Customer() { FirstName = "John" });
-            
-           
-
-            //Write Customer date to xml document
-            XmlSerializer xs = new XmlSerializer(typeof(List<Customer>)) ;
-            TextWriter txtWriter = new StreamWriter(fileLocation);
-            xs.Serialize(txtWriter, customers);
-            txtWriter.Close();          
+            if (inputMain == 3)
+            {
+                Console.WriteLine($"Enter name of user you would like to Edit");
+            }
         }
     }
 }
