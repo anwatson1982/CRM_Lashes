@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 namespace Lashes_CRM
 {
     public class Customer
@@ -23,7 +24,7 @@ namespace Lashes_CRM
 
         public override string ToString()
         {
-            return $"{CustomerID} - {FirstName} - {LastName}";
+            return $"{CustomerID} - {FirstName} - {LastName} - {EmailAddress} - {PhoneNumber}";
         }
     }
 }

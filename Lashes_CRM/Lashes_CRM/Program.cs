@@ -38,6 +38,7 @@ namespace Lashes_CRM
 
             bool UserActive = false;
             var fileLocation = @"C:\Database.xml";
+            var SearchCustomerFirstName = "";
             string FirstNameInput = "";
             string SurNameInput = "";
             string Email = "";
@@ -63,25 +64,26 @@ namespace Lashes_CRM
             int inputMain = Int32.Parse(userInput);
 
 
+
+            //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
+            if (File.Exists(fileLocation))
+            {
+                Console.WriteLine($"File Exist");
+                StreamReader xmlDatabase = new StreamReader(fileLocation);
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
+                List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                customers = CustomerList;
+                xmlDatabase.Close();
+            }
+            else
+            {
+                Console.WriteLine($"File does not exist");
+                var DbFile = new System.IO.StreamWriter(fileLocation);
+                DbFile.Close();
+            }
             if (inputMain == 1)
             {
                 Console.Clear();
-                //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-                if (File.Exists(fileLocation))
-                {
-                    Console.WriteLine($"File Exist");
-                    StreamReader xmlDatabase = new StreamReader(fileLocation);
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
-                    List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
-                    customers = CustomerList;
-                    xmlDatabase.Close();
-                }
-                else
-                {
-                    Console.WriteLine($"File does not exist");
-                    var DbFile = new System.IO.StreamWriter(fileLocation);
-                    DbFile.Close();
-                }
                 //User Input screen, user asked to Enter first name Surname, Email Address and Phone Number
                 AddUserInput(FirstNameInput, SurNameInput, Email, PhoneNo);
                 //Setting class peratmeters 
@@ -103,10 +105,20 @@ namespace Lashes_CRM
 
                 if (searchDisplayNo == 1)
                 {
+
+                    List<Customer> customerSearchList = new List<Customer>();
+
                     Console.WriteLine($"Enter first name of user you would like to search for");
-                    string inputSearchFirstName = Console.ReadLine();
                     string firstNameSearch = Console.ReadLine();
-                    customers.Find(x => x.FirstName.Contains(inputSearchFirstName));
+                    IEnumerable<Customer> customerQuery =
+                     from customerFound in customers
+                     where customerFound.FirstName == firstNameSearch
+                     select customerFound;
+                    foreach (Customer customerFound in customerQuery)
+                    {
+                        Console.WriteLine(customerFound);
+                    }
+                    Console.WriteLine($"The End");
                 }
                 if (searchDisplayNo == 2)
                 {
@@ -119,10 +131,6 @@ namespace Lashes_CRM
                     string firstNameSearch = Console.ReadLine();
 
                 }
-                if (searchDisplayNo > 3)
-                Console.WriteLine($"Invald option please try again");
-                SearchDisplay();
-                searchDisplayNo = SearchDisplayOption();
             }
             if (inputMain == 3)
             {
@@ -163,7 +171,7 @@ namespace Lashes_CRM
             string searchUserInput = Console.ReadLine();
             int searchUserDisplayNo = Int32.Parse(searchUserInput);
             return searchUserDisplayNo;
-         }
+        }
         /// <summary>
         /// Display When Add customer is selected from main option screen
         /// </summary>
@@ -171,7 +179,7 @@ namespace Lashes_CRM
         /// <param name="SurName">SurNameInput</param>
         /// <param name="EmailAddress">Email</param>
         /// <param name="PhoneNumber">PhoneNo</param>
-        public static void AddUserInput (string FirstName, string SurName, string EmailAddress, string PhoneNumber)
+        public static void AddUserInput(string FirstName, string SurName, string EmailAddress, string PhoneNumber)
         {
             Console.WriteLine($"Enter first name");
             FirstName = Console.ReadLine();
