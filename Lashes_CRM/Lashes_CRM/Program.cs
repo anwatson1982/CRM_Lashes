@@ -123,7 +123,10 @@ namespace Lashes_CRM
                 if (searchDisplayNo == 2)
                 {
                     Console.WriteLine($"Enter first name of user you would like to search for");
-                    string firstNameSearch = Console.ReadLine();
+                    string lastNameSearch = Console.ReadLine();
+                     var searchCustomerLastName =  customers.FindAll(x => x.LastName.Contains(lastNameSearch));
+                    foreach (Customer customerFound in searchCustomerLastName)
+                    Console.WriteLine(customerFound);
                 }
                 if (searchDisplayNo == 3)
                 {
