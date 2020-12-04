@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Lashes_CRM
 {
@@ -33,7 +34,8 @@ namespace Lashes_CRM
             //var highestID = customers.Max(f => f.CustomerID);
 
             var customerToEdit = customers.Find(f => f.CustomerID == 0);
-
+            int inputMain = 0;
+            int searchDisplayNo = 0;
             //customers.OrderBy( b => b.date)
 
             bool UserActive = false;
@@ -60,11 +62,19 @@ namespace Lashes_CRM
             TreatmentType.Add("22");
 
             MainDisplay();
-            string userInput = Console.ReadLine();
-            int inputMain = Int32.Parse(userInput);
-
-
-
+          //  string userInput = Console.ReadLine();
+            while (!int.TryParse(Console.ReadLine(), out inputMain))
+            {
+                UserInputValidationError();
+            }
+            while (inputMain > 3)
+            {
+                UserInputValidationError();
+                while (!int.TryParse(Console.ReadLine(), out inputMain))
+                {
+                    UserInputValidationError();
+                }
+             }
             //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
             if (File.Exists(fileLocation))
             {
@@ -81,13 +91,34 @@ namespace Lashes_CRM
                 var DbFile = new System.IO.StreamWriter(fileLocation);
                 DbFile.Close();
             }
+          
             if (inputMain == 1)
             {
                 Console.Clear();
                 //User Input screen, user asked to Enter first name Surname, Email Address and Phone Number
-                AddUserInput(FirstNameInput, SurNameInput, Email, PhoneNo);
+                // AddUserInput(SurNameInput, Email, PhoneNo);
+                Console.WriteLine($"Enter first name");
+                FirstNameInput = Console.ReadLine();
+                Console.WriteLine($"Enter surname name");
+                SurNameInput = Console.ReadLine();
+                Console.WriteLine($"Enter phone number name");
+                PhoneNo = Console.ReadLine();
+                Console.WriteLine($"Enter email address name");
+                Email = Console.ReadLine();
+                bool ValidateEmail = Validate(Email);
+                while (ValidateEmail == false)
+                {
+                    EmailValidationError();
+                    Email = Console.ReadLine();
+                }
                 //Setting class peratmeters 
-                Customer customer1 = new Customer() { FirstName = FirstNameInput, LastName = SurNameInput, ActiveUser = UserActive, PhoneNumber = PhoneNo, EmailAddress = Email };
+                Customer customer1 = new Customer() 
+                { 
+                FirstName = FirstNameInput, 
+                LastName = SurNameInput, 
+                PhoneNumber = PhoneNo,
+                EmailAddress = Email };
+
                 Console.WriteLine(customer1);
                 //Adding new Customer to Database         
                 customers.Add(customer1);
@@ -101,7 +132,22 @@ namespace Lashes_CRM
             {
                 Console.Clear();
                 SearchDisplay();
-                int searchDisplayNo = SearchDisplayOption();
+               // int searchDisplayNo = SearchDisplayOption();
+
+                while (!int.TryParse(Console.ReadLine(), out searchDisplayNo))
+                {
+                    UserInputValidationError();
+                   // searchDisplayNo = SearchDisplayOption();
+                }
+                while (searchDisplayNo > 3)
+                {
+                    UserInputValidationError();
+                   while (!int.TryParse(Console.ReadLine(), out searchDisplayNo))
+                    {
+                        UserInputValidationError();
+                    }
+                    //  searchDisplayNo = SearchDisplayOption();
+                }
 
                 if (searchDisplayNo == 1)
                 {
@@ -124,9 +170,9 @@ namespace Lashes_CRM
                 {
                     Console.WriteLine($"Enter first name of user you would like to search for");
                     string lastNameSearch = Console.ReadLine();
-                     var searchCustomerLastName =  customers.FindAll(x => x.LastName.Contains(lastNameSearch));
+                    var searchCustomerLastName = customers.FindAll(x => x.LastName.Contains(lastNameSearch));
                     foreach (Customer customerFound in searchCustomerLastName)
-                    Console.WriteLine(customerFound);
+                        Console.WriteLine(customerFound);
                 }
                 if (searchDisplayNo == 3)
                 {
@@ -169,12 +215,12 @@ namespace Lashes_CRM
             Console.WriteLine($"Press 3 to search email address");
 
         }
-        public static int SearchDisplayOption()
+      /*  public static int SearchDisplayOption()
         {
             string searchUserInput = Console.ReadLine();
             int searchUserDisplayNo = Int32.Parse(searchUserInput);
             return searchUserDisplayNo;
-        }
+        } */
         /// <summary>
         /// Display When Add customer is selected from main option screen
         /// </summary>
@@ -182,16 +228,30 @@ namespace Lashes_CRM
         /// <param name="SurName">SurNameInput</param>
         /// <param name="EmailAddress">Email</param>
         /// <param name="PhoneNumber">PhoneNo</param>
-        public static void AddUserInput(string FirstName, string SurName, string EmailAddress, string PhoneNumber)
+        public static void AddUserInput( string SurName, string EmailAddress, string PhoneNumber)
         {
             Console.WriteLine($"Enter first name");
-            FirstName = Console.ReadLine();
             Console.WriteLine($"Enter surname name");
             SurName = Console.ReadLine();
             Console.WriteLine($"Enter email address");
             EmailAddress = Console.ReadLine();
             Console.WriteLine($"Enter Phone Number");
             PhoneNumber = Console.ReadLine();
+        }
+        public static bool Validate(string EmailAddress)
+        {
+            var regex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+            bool isValid = Regex.IsMatch(EmailAddress, regex, RegexOptions.IgnoreCase);
+            return isValid;
+        }
+        public static void EmailValidationError ()
+        {
+            Console.WriteLine($"Please enter a valid Email Address");
+        }
+        public static void UserInputValidationError()
+        {
+            Console.WriteLine($"Invalid input");
+            Console.WriteLine($"Please enter a number between 1 and 3");
         }
     }
 }
