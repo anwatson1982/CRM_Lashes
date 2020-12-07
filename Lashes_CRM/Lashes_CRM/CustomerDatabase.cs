@@ -17,13 +17,17 @@ namespace Lashes_CRM
             else
                 return false;
         }
-        public static void LoadDatabase(string fileName, StreamReader xmlDatabase, XmlSerializer serializer)
+        public static List<Customer> LoadDatabase()
         {
+            Console.WriteLine($"Loading database...");
+            StreamReader xmlDatabase = new StreamReader(Configuration.FileLocation);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
+            List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
             
-            Console.WriteLine($"File Exist");
-            xmlDatabase = new StreamReader(fileName);
-            serializer = new XmlSerializer(typeof(List<Customer>));        
+            xmlDatabase.Close();
+            return CustomerList;
         }
+   
         public static bool Save(String fileName)
         {
             return false;
