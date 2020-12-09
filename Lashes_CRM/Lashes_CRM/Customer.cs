@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -14,17 +15,25 @@ namespace Lashes_CRM
         public string EmailAddress;
         public DateTime date;
         public string LashType;
-        public string LashSize;
+        public List<string> LashSize;
         public string TreatmentType;
         public bool ActiveUser = true;
         private bool _subscriberList = true;
 
 
-     //   [XmlIgnore]
-        public String FullName
+        //   [XmlIgnore]
+        public string FullName
         {
-            get { return FirstName + LastName; }
+              get { return FirstName + " " + LastName; }
         }
+    
+
+
+
+
+        
+
+        
 
      //   public bool SubscriberList { get => _subscriberList; set => _subscriberList = value; }
 
@@ -35,7 +44,7 @@ namespace Lashes_CRM
 
         public override string ToString()
         {
-            return $"{CustomerID} - {FirstName} - {LastName} - {EmailAddress} - {PhoneNumber}";
+            return $"{CustomerID} - {FullName} - {EmailAddress} - {PhoneNumber}";
         }
     }
 }

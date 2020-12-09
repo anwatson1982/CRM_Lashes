@@ -22,8 +22,7 @@ namespace Lashes_CRM
             Console.WriteLine($"Loading database...");
             StreamReader xmlDatabase = new StreamReader(Configuration.FileLocation);
             XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
-            List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
-            
+            List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase); 
             xmlDatabase.Close();
             return CustomerList;
         }
@@ -43,7 +42,7 @@ namespace Lashes_CRM
 
    
 
-        /*  public static List<Customer> FindByName(String name)
+   /*      public static List<Customer> FindByName(String name)
           {
               name = "test";
               return name;
