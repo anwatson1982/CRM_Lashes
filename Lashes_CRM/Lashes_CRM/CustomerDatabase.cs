@@ -8,16 +8,23 @@ namespace Lashes_CRM
 {
     public static class CustomerDatabase
     {
+        
         public static bool Load(String fileName)
         {
+            
             if (File.Exists(fileName))
             {
+                Console.WriteLine($"Loading database...");
+                StreamReader xmlDatabase = new StreamReader(fileName);
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
+                List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                xmlDatabase.Close();
                 return true;
             }
             else
                 return false;
         }
-        public static List<Customer> LoadDatabase()
+       /* public static List<Customer> LoadDatabase()
         {
             Console.WriteLine($"Loading database...");
             StreamReader xmlDatabase = new StreamReader(Configuration.FileLocation);
@@ -25,7 +32,7 @@ namespace Lashes_CRM
             List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase); 
             xmlDatabase.Close();
             return CustomerList;
-        }
+        }*/
    
         public static bool Save(String fileName)
         {

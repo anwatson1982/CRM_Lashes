@@ -27,14 +27,6 @@ namespace Lashes_CRM
               get { return FirstName + " " + LastName; }
         }
     
-
-
-
-
-        
-
-        
-
      //   public bool SubscriberList { get => _subscriberList; set => _subscriberList = value; }
 
      //   public Customer()

@@ -58,18 +58,23 @@ namespace Lashes_CRM
                         UserInputValidationError();
                     }
                 }
-                //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-                if (File.Exists(Configuration.FileLocation))
+                CustomerDatabase.Load(Configuration.FileLocation);
                 {
-                    CustomerDatabase.LoadDatabase();
-                    customersDatabase = CustomerDatabase.LoadDatabase();
+
+                }
+                  
+                    //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
+               /* if (File.Exists(Configuration.FileLocation))
+                {
+                    
+                    customersDatabase = CustomerDatabase.Load(Configuration.FileLocation);
                 }
                 else
                 {
                     Console.WriteLine($"File does not exist");
                     var DbFile = new System.IO.StreamWriter(Configuration.FileLocation);
                     DbFile.Close();
-                }
+                }*/
                 //Add Customer Option
                 if (inputMain == 1)
                 {
@@ -173,7 +178,7 @@ namespace Lashes_CRM
         /// </summary>
         public static void SearchDisplay()
         {
-            Console.WriteLine($"Press 1 to search First Name");
+            Console.WriteLine($"Press 1 to search Name of customer");
         }
       /*  public static int SearchDisplayOption()
         {
