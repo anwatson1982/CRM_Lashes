@@ -9,7 +9,7 @@ namespace Lashes_CRM
 {
     class Program
     {
-       
+
         static void Main(string[] args)
         {
             // if adding customer
@@ -59,22 +59,20 @@ namespace Lashes_CRM
                     }
                 }
                 CustomerDatabase.Load(Configuration.FileLocation);
-                {
+                customersDatabase = CustomerDatabase.Customers;
 
-                }
-                  
-                    //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-               /* if (File.Exists(Configuration.FileLocation))
-                {
-                    
-                    customersDatabase = CustomerDatabase.Load(Configuration.FileLocation);
-                }
-                else
-                {
-                    Console.WriteLine($"File does not exist");
-                    var DbFile = new System.IO.StreamWriter(Configuration.FileLocation);
-                    DbFile.Close();
-                }*/
+                //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
+                /* if (File.Exists(Configuration.FileLocation))
+                 {
+
+                     customersDatabase = CustomerDatabase.Load(Configuration.FileLocation);
+                 }
+                 else
+                 {
+                     Console.WriteLine($"File does not exist");
+                     var DbFile = new System.IO.StreamWriter(Configuration.FileLocation);
+                     DbFile.Close();
+                 }*/
                 //Add Customer Option
                 if (inputMain == 1)
                 {
@@ -145,7 +143,7 @@ namespace Lashes_CRM
                         var searchCustomerName = customersDatabase.FindAll(x => x.FullName.Contains(nameSearch));
                         foreach (Customer customerFound in searchCustomerName)
                             Console.WriteLine(customerFound);
-                    }       
+                    }
                 }
                 if (inputMain == 3)
                 {
@@ -154,7 +152,7 @@ namespace Lashes_CRM
                     string editInput = Console.ReadLine();
                 }
             }
-            
+
 
         }
         /// <summary>
@@ -180,12 +178,12 @@ namespace Lashes_CRM
         {
             Console.WriteLine($"Press 1 to search Name of customer");
         }
-      /*  public static int SearchDisplayOption()
-        {
-            string searchUserInput = Console.ReadLine();
-            int searchUserDisplayNo = Int32.Parse(searchUserInput);
-            return searchUserDisplayNo;
-        } */
+        /*  public static int SearchDisplayOption()
+          {
+              string searchUserInput = Console.ReadLine();
+              int searchUserDisplayNo = Int32.Parse(searchUserInput);
+              return searchUserDisplayNo;
+          } */
         /// <summary>
         /// Validates Email address from user input an forces user to input correct email format 
         /// </summary>
@@ -200,7 +198,7 @@ namespace Lashes_CRM
         /// <summary>
         /// Sends Error message if user Email inout is incorrect 
         /// </summary>
-        public static void EmailValidationError ()
+        public static void EmailValidationError()
         {
             Console.WriteLine($"Please enter a valid Email Address");
         }

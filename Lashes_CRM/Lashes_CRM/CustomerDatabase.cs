@@ -8,32 +8,28 @@ namespace Lashes_CRM
 {
     public static class CustomerDatabase
     {
-        
+
         public static bool Load(String fileName)
         {
-            
+
             if (File.Exists(fileName))
             {
                 Console.WriteLine($"Loading database...");
                 StreamReader xmlDatabase = new StreamReader(fileName);
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
-                List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                List<Customer> CustomerLists = (List<Customer>)serializer.Deserialize(xmlDatabase);
+                _customers = CustomerLists;
                 xmlDatabase.Close();
                 return true;
             }
             else
-                return false;
+                Console.WriteLine($"No file found... creating database...");
+            XmlSerializer xs = new XmlSerializer(typeof(List<Customer>));
+            TextWriter txtWriter = new StreamWriter(fileName);
+            xs.Serialize(txtWriter, _customers);
+            return false;
         }
-       /* public static List<Customer> LoadDatabase()
-        {
-            Console.WriteLine($"Loading database...");
-            StreamReader xmlDatabase = new StreamReader(Configuration.FileLocation);
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Customer>));
-            List<Customer> CustomerList = (List<Customer>)serializer.Deserialize(xmlDatabase); 
-            xmlDatabase.Close();
-            return CustomerList;
-        }*/
-   
+
         public static bool Save(String fileName)
         {
             return false;
@@ -41,19 +37,19 @@ namespace Lashes_CRM
 
         private static List<Customer> _customers;
 
-        public static List<Customer>  Customers
+        public static List<Customer> Customers
         {
             get { return _customers; }
             set { _customers = value; }
         }
 
-   
 
-   /*      public static List<Customer> FindByName(String name)
-          {
-              name = "test";
-              return name;
-          } */
+
+        /*      public static List<Customer> FindByName(String name)
+               {
+                   name = "test";
+                   return name;
+               } */
 
     }
 }
