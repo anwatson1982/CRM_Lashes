@@ -16,6 +16,7 @@ namespace Lashes_CRM
             // list of customer is empty new user obj gets client id 0
             // list is not empty 
             var customersDatabase = new List<Customer>();
+            var LashDatabase = new List<TreatmentData>();
             //var highestID = customers.Max(f => f.CustomerID);
             var customerToEdit = customersDatabase.Find(f => f.CustomerID == 0);
             int inputMain = 0;
@@ -58,21 +59,15 @@ namespace Lashes_CRM
                         UserInputValidationError();
                     }
                 }
-                CustomerDatabase.Load(Configuration.FileLocation);
-                customersDatabase = CustomerDatabase.Customers;
 
                 //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-                /* if (File.Exists(Configuration.FileLocation))
-                 {
+                CustomerDatabase.Load(Configuration.FileLocation);
+                customersDatabase = CustomerDatabase.Customers;
+                //If statement to see if Lash Data config file exists 
+                Configuration.LoadLashData(Configuration.LashFileLocation);
+                LashDatabase = Configuration.LashData;
 
-                     customersDatabase = CustomerDatabase.Load(Configuration.FileLocation);
-                 }
-                 else
-                 {
-                     Console.WriteLine($"File does not exist");
-                     var DbFile = new System.IO.StreamWriter(Configuration.FileLocation);
-                     DbFile.Close();
-                 }*/
+
                 //Add Customer Option
                 if (inputMain == 1)
                 {
