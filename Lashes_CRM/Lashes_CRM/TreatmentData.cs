@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Lashes_CRM
 {
-    class TreatmentData
+    public  class TreatmentData
     {
-        List<string> LashType = new List<string>();
-        List<string> TreatmentType = new List<string>();
-        List<string> LashSize = new List<string>();
+      public List<string> LashType = new List<string>();
+      public  List<string> TreatmentType = new List<string>();
+      public  List<string> LashSize = new List<string>();
     }
 }

@@ -9,26 +9,20 @@ namespace Lashes_CRM
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            // if adding customer
-            // list of customer is empty new user obj gets client id 0
-            // list is not empty 
             var customersDatabase = new List<Customer>();
             var LashDatabase = new List<TreatmentData>();
-            //var highestID = customers.Max(f => f.CustomerID);
             var customerToEdit = customersDatabase.Find(f => f.CustomerID == 0);
             int inputMain = 0;
             int searchDisplayNo = 0;
-            //customers.OrderBy( b => b.date)
             string FirstNameInput = "";
             string SurNameInput = "";
             string Email = "";
             string PhoneNo = "";
             bool continueProgram = true;
             //Lists going to be added to XML files then added to configuration class
-            List<string> LashType = new List<string>();
+         /*   List<string> LashType = new List<string>();
             LashType.Add("Russian");
             LashType.Add("Classic");
             List<string> TreatmentType = new List<string>();
@@ -42,6 +36,8 @@ namespace Lashes_CRM
             TreatmentType.Add("20");
             TreatmentType.Add("21");
             TreatmentType.Add("22");
+         */
+   
 
             while (continueProgram)
             {
@@ -59,15 +55,12 @@ namespace Lashes_CRM
                         UserInputValidationError();
                     }
                 }
-
-                //If Statement to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-                CustomerDatabase.Load(Configuration.FileLocation);
+                //Function to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
+                CustomerDatabase.Load(Configuration.CustomerFileLocation, CustomerDatabase.Customers);
                 customersDatabase = CustomerDatabase.Customers;
-                //If statement to see if Lash Data config file exists 
-                Configuration.LoadLashData(Configuration.LashFileLocation);
-                LashDatabase = Configuration.LashData;
-
-
+                //Function to see if Lash Data config file exists 
+              //  TreatmentDatabase.LoadLashData(Configuration.LashFileLocation, TreatmentDatabase.Treatments);
+               //  LashDatabase = TreatmentDatabase.Treatments;
                 //Add Customer Option
                 if (inputMain == 1)
                 {
@@ -96,14 +89,13 @@ namespace Lashes_CRM
                         LastName = SurNameInput,
                         PhoneNumber = PhoneNo,
                         EmailAddress = Email
-                    };
-
+                    };         
                     Console.WriteLine(customer1);
                     //Adding new Customer to Database         
                     customersDatabase.Add(customer1);
                     //Write Customer data to xml document
                     XmlSerializer xs = new XmlSerializer(typeof(List<Customer>));
-                    TextWriter txtWriter = new StreamWriter(Configuration.FileLocation);
+                    TextWriter txtWriter = new StreamWriter(Configuration.CustomerFileLocation);
                     xs.Serialize(txtWriter, customersDatabase);
                     txtWriter.Close();
                 }
@@ -147,8 +139,6 @@ namespace Lashes_CRM
                     string editInput = Console.ReadLine();
                 }
             }
-
-
         }
         /// <summary>
         /// Main screen Display giving 3 options for the user
