@@ -179,7 +179,7 @@ namespace Lashes_CRM
         /// <returns>True or False if email adress is in correct format</returns>
         public static bool Validate(string EmailAddress)
         {
-            var regex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+            var regex = @"[\w!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z]+\.[a-zA-Z]{2,4}|\.[a-zA-Z]{2,4}";
             bool isValid = Regex.IsMatch(EmailAddress, regex, RegexOptions.IgnoreCase);
             return isValid;
         }
