@@ -29,5 +29,13 @@ namespace Lashes_CRM
                 return dataList;
             }
         }
+        public static T XMLSave<T>(string fileName, T dataList)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(T));
+            TextWriter txtWriter = new StreamWriter(fileName);
+            xs.Serialize(txtWriter, dataList);
+            txtWriter.Close();
+            return dataList;
+        }
     }
 }

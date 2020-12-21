@@ -14,6 +14,11 @@ namespace Lashes_CRM
             _customers = Utilities.XMLLoad<List<Customer>>(fileName, Customers);
         }
 
+        public static void SaveCustomerData(string fileName, List<Customer>customers)
+        {
+            _customers = Utilities.XMLSave<List<Customer>>(fileName, Customers);
+        }
+
         public static bool Save(String fileName)
         {
             return false;

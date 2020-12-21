@@ -94,10 +94,13 @@ namespace Lashes_CRM
                     //Adding new Customer to Database         
                     customersDatabase.Add(customer1);
                     //Write Customer data to xml document
-                    XmlSerializer xs = new XmlSerializer(typeof(List<Customer>));
-                    TextWriter txtWriter = new StreamWriter(Configuration.CustomerFileLocation);
-                    xs.Serialize(txtWriter, customersDatabase);
-                    txtWriter.Close();
+                    /* XmlSerializer xs = new XmlSerializer(typeof(List<Customer>));
+                     TextWriter txtWriter = new StreamWriter(Configuration.CustomerFileLocation);
+                     xs.Serialize(txtWriter, customersDatabase);
+                     txtWriter.Close();*/
+                    CustomerDatabase.SaveCustomerData(Configuration.CustomerFileLocation, CustomerDatabase.Customers);
+                    customersDatabase = CustomerDatabase.Customers;
+
                 }
                 //Search Option
                 if (inputMain == 2)
