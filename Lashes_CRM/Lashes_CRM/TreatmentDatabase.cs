@@ -8,13 +8,13 @@ namespace Lashes_CRM
 {
     class TreatmentDatabase
     {
-        public static void LoadLashData(String fileName, List<TreatmentData>treatments)
+        public static void LoadLashData(String fileName, List<string>treatments)
         {
-            _treatments = Utilities.XMLLoad<TreatmentData>(fileName, Treatments);
+            _treatments = Utilities.XMLLoad<List<string>>(fileName, Treatments);
         }
-        private static TreatmentData _treatments;
+        private static List<string> _treatments;
 
-        public static TreatmentData Treatments
+        public static List<string> Treatments
         {
             get { return _treatments; }
             set { _treatments = value; }

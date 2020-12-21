@@ -12,14 +12,14 @@ namespace Lashes_CRM
         static void Main(string[] args)
         {
             var customersDatabase = new List<Customer>();
-            var LashDatabase = new List<TreatmentData>();
+            var lashDatabase = new List<string>();
             var customerToEdit = customersDatabase.Find(f => f.CustomerID == 0);
             int inputMain = 0;
             int searchDisplayNo = 0;
-            string FirstNameInput = "";
-            string SurNameInput = "";
+            string firstNameInput = "";
+            string surNameInput = "";
             string Email = "";
-            string PhoneNo = "";
+            string phoneNo = "";
             bool continueProgram = true;
             //Lists going to be added to XML files then added to configuration class
          /*   List<string> LashType = new List<string>();
@@ -56,11 +56,11 @@ namespace Lashes_CRM
                     }
                 }
                 //Function to check if XML file exists or not if it does exist load data into customers list if it does not exist create the document 
-                CustomerDatabase.Load(Configuration.CustomerFileLocation, CustomerDatabase.Customers);
+                CustomerDatabase.LoadCustomerData(Configuration.CustomerFileLocation, CustomerDatabase.Customers);
                 customersDatabase = CustomerDatabase.Customers;
                 //Function to see if Lash Data config file exists 
-              //  TreatmentDatabase.LoadLashData(Configuration.LashFileLocation, TreatmentDatabase.Treatments);
-               //  LashDatabase = TreatmentDatabase.Treatments;
+             TreatmentDatabase.LoadLashData(Configuration.LashFileLocation, TreatmentDatabase.Treatments);
+              lashDatabase = TreatmentDatabase.Treatments;
                 //Add Customer Option
                 if (inputMain == 1)
                 {
@@ -68,11 +68,11 @@ namespace Lashes_CRM
                     //User Input screen, user asked to Enter first name Surname, Email Address and Phone Number
                     // AddUserInput(SurNameInput, Email, PhoneNo);
                     Console.WriteLine($"Enter first name");
-                    FirstNameInput = Console.ReadLine();
+                    firstNameInput = Console.ReadLine();
                     Console.WriteLine($"Enter surname name");
-                    SurNameInput = Console.ReadLine();
+                    surNameInput = Console.ReadLine();
                     Console.WriteLine($"Enter phone number name");
-                    PhoneNo = Console.ReadLine();
+                    phoneNo = Console.ReadLine();
                     Console.WriteLine($"Enter email address name");
                     Email = Console.ReadLine();
                     bool ValidateEmail = Validate(Email);
@@ -85,9 +85,9 @@ namespace Lashes_CRM
                     //Setting class peratmeters 
                     Customer customer1 = new Customer()
                     {
-                        FirstName = FirstNameInput,
-                        LastName = SurNameInput,
-                        PhoneNumber = PhoneNo,
+                        FirstName = firstNameInput,
+                        LastName = surNameInput,
+                        PhoneNumber = phoneNo,
                         EmailAddress = Email
                     };         
                     Console.WriteLine(customer1);
@@ -129,7 +129,7 @@ namespace Lashes_CRM
                         // string CustomerFullName = mc.FullName;
                         var searchCustomerName = customersDatabase.FindAll(x => x.FullName.Contains(nameSearch));
                         foreach (Customer customerFound in searchCustomerName)
-                            Console.WriteLine(customerFound);
+                        Console.WriteLine(customerFound);
                     }
                 }
                 if (inputMain == 3)
